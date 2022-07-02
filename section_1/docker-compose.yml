@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+
+  backend_app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    expose:
+      - "3001"
+    environment:
+      - PORT=3001
+
+  frontend_app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - API_URL=http://localhost:3001
+    depends_on:
+      - backend_app
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      
